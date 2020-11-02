@@ -1,3 +1,7 @@
+"""
+This is a script to calculate the sensitivity of a telescope to detect microlensing exoplanet's signal
+"""
+
 import numpy as np
 from astropy import constants as const
 from astropy import units as u
@@ -98,6 +102,9 @@ def signal_to_noise_ratio(photoelectrons_per_second_signal, dark_current_noise, 
 
 if __name__ == '__main__':
 
+    # ==================================================================================================================
+    #                                            SET YOUR PARAMETERS HERE
+    # ==================================================================================================================
     # Star properties
     wavelength_star_peak = np.float(550e-9) * u.meter
     luminosity_of_the_star = np.float(4e26) * u.watt
@@ -111,11 +118,17 @@ if __name__ == '__main__':
     # Gravitational Lenses parameters:
     magnification = 1.34
 
+    # ==================================================================================================================
+    #                              SETTING SOME PHOTONS AND PHOTOELECTRONS AS UNIT
+    # ==================================================================================================================
     # "photons" unit definition
     photons = u.def_unit('photons')
     # "photoelectrons" unit definition
     photoelectrons = u.def_unit('photoelectrons')
 
+    # ==================================================================================================================
+    #                                            RUNNING MAIN CODE
+    # ==================================================================================================================
     energy_of_a_photon = planck_einstein_relation(wavelength_star_peak)
     number_emitted_photons_per_second = photons_emitted_by_a_star_per_second(luminosity_of_the_star, energy_of_a_photon)
 
@@ -127,8 +140,10 @@ if __name__ == '__main__':
                                                                quantum_efficiency_value, etenue_value)
 
     photoelectrons_when_lensed = photoelectrons_with_amplification(generated_photoelectrons, magnification)
-    #
 
+    # ==================================================================================================================
+    #                          PRINTING INTERMEDIARY STEPS JUST TO FOLLOW WHAT IS GOING ON
+    # ==================================================================================================================
     print(f"\nNumber of emitted photons by a star of \nluminosity {luminosity_of_the_star} and \nwavelength peak "
           f"{wavelength_star_peak} \nper second:")
     print_cyan(number_emitted_photons_per_second.to(photons/u.s))
