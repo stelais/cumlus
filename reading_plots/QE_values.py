@@ -118,6 +118,7 @@ def plots(wavelength_commercial_, qe_commercial_,
     plt.title('HgCdTe H2RG')
     plt.xlabel('wavelength (micron)')
     plt.ylabel('quantum efficiency')
+    plt.legend()
     plt.show()
     plt.close()
 
